@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>TILE RUSH - Fruit Edition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <main class="game-container">
+
+    <header class="top-header">
+      <div class="brand">
+        <span class="brand-icon">🍓</span>
+        <h1>TILE RUSH</h1>
+      </div>
+
+      <div class="header-buttons">
+  <button class="icon-btn" id="pauseBtn" aria-label="Pause game">Ⅱ</button>
+
+  <button class="icon-btn restart-btn" id="restartBtn" aria-label="Restart game">↻</button>
+
+  <button class="icon-btn quit-btn" id="quitBtn" aria-label="Quit game">✕</button>
+</div>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <span>SCORE</span>
+        <strong id="score">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>BEST</span>
+        <strong id="best">0</strong>
+      </div>
+
+      <div class="stat timer-stat">
+        <span>TIME LEFT</span>
+        <strong id="timer">30</strong>
+      </div>
+    </section>
+
+    <section class="game-heading">
+      <span class="round-label">ENDLESS MODE</span>
+      <h2>Find your match.</h2>
+      <p>Match identical fruits and keep your tray clear.</p>
+    </section>
+
+    <!-- TILE BOARD -->
+
+    <section class="board-wrapper">
+
+      <div class="board-top">
+        <span>FRUIT BOARD</span>
+        <span id="tileCountDisplay">12 TILES</span>
+      </div>
+
+      <div class="tile-board" id="tileBoard">
+
+        <!-- Bottom layer -->
+        <div class="tile tile-bottom" style="--x:3%;--y:7%;--layer:1">
+          🍓
+        </div>
+
+        <div class="tile tile-bottom" style="--x:27%;--y:7%;--layer:1">
+          🍊
+        </div>
+
+        <div class="tile tile-bottom" style="--x:51%;--y:7%;--layer:1">
+          🍇
+        </div>
+
+        <div class="tile tile-bottom" style="--x:75%;--y:7%;--layer:1">
+          🍉
+        </div>
+
+        <div class="tile tile-bottom" style="--x:3%;--y:42%;--layer:1">
+          🍍
+        </div>
+
+        <div class="tile tile-bottom" style="--x:27%;--y:42%;--layer:1">
+          🥝
+        </div>
+
+        <div class="tile tile-bottom" style="--x:51%;--y:42%;--layer:1">
+          🍓
+        </div>
+
+        <div class="tile tile-bottom" style="--x:75%;--y:42%;--layer:1">
+          🍊
+        </div>
+
+        <div class="tile tile-bottom" style="--x:3%;--y:77%;--layer:1">
+          🍇
+        </div>
+
+        <div class="tile tile-bottom" style="--x:27%;--y:77%;--layer:1">
+          🍉
+        </div>
+
+        <div class="tile tile-bottom" style="--x:51%;--y:77%;--layer:1">
+          🍍
+        </div>
+
+        <div class="tile tile-bottom" style="--x:75%;--y:77%;--layer:1">
+          🥝
+        </div>
+
+        <!-- Upper overlapping layer -->
+        <div class="tile tile-top" style="--x:15%;--y:24%;--layer:2">
+          🍓
+        </div>
+
+        <div class="tile tile-top" style="--x:39%;--y:24%;--layer:2">
+          🍊
+        </div>
+
+        <div class="tile tile-top" style="--x:63%;--y:24%;--layer:2">
+          🍇
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- MATCHING TRAY -->
+
+    <section class="tray-section">
+
+      <div class="tray-heading">
+        <h3>Your tray</h3>
+        <span id="trayCount">0 / 4</span>
+      </div>
+
+      <div class="tray" id="tray">
+        <div class="tray-slot"></div>
+        <div class="tray-slot"></div>
+        <div class="tray-slot"></div>
+        <div class="tray-slot"></div>
+      </div>
+
+    </section>
+
+    <p class="game-tip">
+      <span>💡</span>
+      Match two identical fruits before time runs out.
+    </p>
+
+    <button class="start-btn" id="startBtn">
+      START GAME
+    </button>
+
+    <p class="game-status" id="gameStatus">
+      Ready when you are.
+    </p>
+
+  </main>
+
+
+  <!-- RESTART CONFIRMATION POPUP -->
+
+  <div class="modal-overlay" id="restartModal">
+    <div class="modal">
+
+      <div class="modal-icon">↻</div>
+
+      <h2>Restart game?</h2>
+
+      <p>
+        Your current game progress will be lost.
+        Your best score will be kept.
+      </p>
+
+      <div class="modal-buttons">
+        <button class="cancel-btn" id="cancelRestart">
+          NO, CONTINUE
+        </button>
+
+        <button class="confirm-btn" id="confirmRestart">
+          YES, RESTART
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+<!-- QUIT CONFIRMATION POPUP -->
+
+<div class="modal-overlay" id="quitModal">
+  <div class="modal">
+
+    <div class="modal-icon">↗</div>
+
+    <h2>Leaving so soon?</h2>
+
+    <p>
+      Your current game progress will be lost.
+      Your best score will be kept.
+    </p>
+
+    <div class="modal-buttons">
+
+      <button class="cancel-btn" id="cancelQuit">
+        STAY
+      </button>
+
+      <button class="confirm-btn" id="confirmQuit">
+        YES, QUIT
+      </button>
+
+    </div>
+
+  </div>
+</div>
+  <!-- PAUSE POPUP -->
+
+  <div class="modal-overlay" id="pauseModal">
+    <div class="modal">
+
+      <div class="modal-icon">Ⅱ</div>
+
+      <h2>Game paused</h2>
+
+      <p>Take a little break. Your game is waiting for you.</p>
+
+      <button class="confirm-btn resume-btn" id="resumeBtn">
+        RESUME GAME
+      </button>
+
+    </div>
+  </div>
+
+  <!-- GAME OVER POPUP -->
+<div class="modal-overlay" id="gameOverModal">
+    <div class="modal game-over-modal">
+
+        <div class="sad-mascot">
+    <div class="mascot-leaves">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="mascot-body">
+        <div class="mascot-eyes">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="mascot-tears">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="mascot-mouth"></div>
+        <div class="mascot-cheeks"></div>
+    </div>
+
+    <div class="mascot-arm left"></div>
+    <div class="mascot-arm right"></div>
+    <div class="mascot-foot left"></div>
+    <div class="mascot-foot right"></div>
+</div>
+
+        <h2>Game Over!</h2>
+
+        <p id="gameOverMessage">
+            Don't give up. You can try again!
+        </p>
+
+        <div class="result-score">
+            <span>Your Score</span>
+            <strong id="gameOverScore">0</strong>
+        </div>
+
+        <div class="result-best">
+            Best Score: <strong id="gameOverBest">0</strong>
+        </div>
+
+        <button id="retryBtn" class="primary-btn">
+            Try Again
+        </button>
+
+    </div>
+</div>
+
+
+<!-- DIFFICULTY CLEARED POPUP -->
+<div class="modal-overlay" id="difficultyModal">
+
+    <div class="modal difficulty-modal">
+
+        <h2>Difficulty Cleared!</h2>
+
+        <p id="difficultyComment">
+            Amazing! You've matched every fruit.
+        </p>
+
+        <div class="result-score">
+            <span>Points Earned</span>
+            <strong id="difficultyScore">0</strong>
+        </div>
+
+        <button id="continueBtn" class="primary-btn">
+            Continue
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- NEXT DIFFICULTY LOADING POPUP -->
+<div class="modal-overlay" id="loadingModal">
+
+    <div class="modal loading-modal">
+
+        <h2>Getting ready...</h2>
+
+        <p>Preparing your next difficulty.</p>
+
+        <div class="loading-track">
+            <div id="loadingBarFill"></div>
+        </div>
+
+        <small id="loadingText">Please wait...</small>
+
+    </div>
+
+</div>
+
+
+<!-- FULL-SCREEN CONFETTI -->
+<div id="confettiContainer"></div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

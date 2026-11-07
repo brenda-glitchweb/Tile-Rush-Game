@@ -1,0 +1,759 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #202b4c 0%, transparent 55%),
+    #0b1020;
+  color: #f4f3ff;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 20px 14px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 440px;
+}
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  font-size: 28px;
+}
+
+.brand h1 {
+  font-size: 19px;
+  letter-spacing: 3px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 9px;
+}
+
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  background: #1b2541;
+  color: white;
+  border: 1px solid #394665;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.restart-btn {
+  color: #c5adff;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.stat {
+  background: #151e35;
+  border: 1px solid #293653;
+  border-radius: 14px;
+  padding: 13px 4px;
+  text-align: center;
+}
+
+.stat span {
+  display: block;
+  font-size: 9px;
+  color: #929dbb;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+
+.stat strong {
+  font-size: 23px;
+}
+
+.timer-stat strong {
+  color: #b69aff;
+}
+
+.game-heading {
+  text-align: center;
+  margin: 29px 0 21px;
+}
+
+.round-label {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #b69aff;
+  background: #242344;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin-bottom: 12px;
+}
+
+.game-heading h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.game-heading p {
+  color: #929dbb;
+  font-size: 12px;
+}
+
+.board-wrapper {
+  background: #111a30;
+  border: 1px solid #303c5b;
+  border-radius: 19px;
+  padding: 15px 12px;
+}
+
+.board-top {
+  display: flex;
+  justify-content: space-between;
+  color: #929dbb;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.tile-board {
+  width: 100%;
+  height: 350px;
+  position: relative;
+  overflow-x: hidden;
+overflow-y: auto;
+  background:
+    radial-gradient(circle at center, #202c49, #121b30);
+  border-radius: 13px;
+}
+
+.tile {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 21%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 11px;
+  font-size: clamp(23px, 7vw, 32px);
+  background: linear-gradient(145deg, #f4f0e8, #d8d8e2);
+  border: 2px solid #ffffff;
+  box-shadow:
+    0 5px 0 #9297a8,
+    0 9px 13px #080d19;
+  z-index: var(--layer);
+  user-select: none;
+  cursor: pointer;
+  transform: rotate(var(--rotation));
+  transition:
+    top 0.25s ease,
+    left 0.25s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.tile-bottom {
+  opacity: 0.97;
+}
+
+.tile-top {
+  
+  background: linear-gradient(145deg, #fff9ed, #e6ddf4);
+  border-color: #c4aaff;
+  box-shadow:
+    0 6px 0 #8e79bc,
+    0 11px 17px #080d19;
+}
+
+.tile.covered {
+  filter: brightness(0.72);
+  cursor: not-allowed;
+}
+
+.tray-section {
+  margin-top: 25px;
+}
+
+.tray-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.tray-heading h3 {
+  font-size: 14px;
+}
+
+.tray-heading span {
+  color: #a99acb;
+  font-size: 12px;
+}
+
+.tray {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.tray-slot {
+  height: 66px;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #121b30;
+  border: 1px dashed #4a5676;
+  border-radius: 12px;
+  font-size: clamp(30px, 9vw, 38px);
+  line-height: 1;
+  overflow: hidden;
+}
+
+.game-tip {
+  text-align: center;
+  color: #929dbb;
+  font-size: 11px;
+  margin: 23px 0;
+}
+
+.game-tip span {
+  margin-right: 5px;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 13px;
+  background: linear-gradient(100deg, #8065ed, #a78aff);
+  color: white;
+  font-weight: 800;
+  letter-spacing: 2px;
+  font-size: 13px;
+  box-shadow: 0 5px 16px #8065ed35;
+}
+
+.start-btn:active,
+.confirm-btn:active,
+.cancel-btn:active {
+  transform: scale(0.98);
+}
+
+.game-status {
+  text-align: center;
+  margin-top: 15px;
+  color: #929dbb;
+  font-size: 12px;
+}
+
+/* POPUP WINDOWS */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #050914c9;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  backdrop-filter: blur(7px);
+}
+
+.modal-overlay.show {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 340px;
+  background: #19233c;
+  border: 1px solid #465579;
+  border-radius: 21px;
+  padding: 27px 20px;
+  text-align: center;
+  box-shadow: 0 20px 60px #0008;
+  animation: popup 0.2s ease;
+}
+
+@keyframes popup {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-icon {
+  width: 55px;
+  height: 55px;
+  margin: 0 auto 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #30294e;
+  color: #c5adff;
+  font-size: 28px;
+}
+
+.modal h2 {
+  font-size: 21px;
+  margin-bottom: 10px;
+}
+
+.modal p {
+  color: #a6b0ca;
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 9px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 13px 5px;
+  border: none;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.cancel-btn {
+  background: #303c58;
+  color: white;
+}
+
+.confirm-btn {
+  background: linear-gradient(100deg, #8065ed, #a78aff);
+  color: white;
+}
+
+.resume-btn {
+  width: 100%;
+}
+
+@media (max-width: 350px) {
+  .tile-board {
+    height: 310px;
+  }
+
+  .tile {
+    font-size: 23px;
+  }
+
+  .tray-slot {
+    height: 58px;
+  }
+}
+/* =================================
+   GAME OVER & DIFFICULTY POPUPS
+================================= */
+
+.game-over-modal,
+.difficulty-modal,
+.loading-modal {
+    text-align: center;
+    width: 90%;
+    max-width: 340px;
+    padding: 30px 22px;
+    background: linear-gradient(145deg, #202b49, #141d34);
+    border: 1px solid #596487;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    color: #f5f0e8;
+}
+
+.game-over-modal h2,
+.difficulty-modal h2,
+.loading-modal h2 {
+    font-size: 23px;
+    margin-bottom: 12px;
+    color: #f3d9a5;
+}
+
+.game-over-modal p,
+.difficulty-modal p,
+.loading-modal p {
+    color: #c5cde0;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+/* SAD FRUIT MASCOT */
+
+.sad-mascot {
+    font-size: 55px;
+    margin-bottom: 12px;
+    animation: sadBounce 2s ease-in-out infinite;
+}
+
+@keyframes sadBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+/* SCORE DISPLAY */
+
+.result-score {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 15px;
+    margin: 18px 0 12px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+}
+
+.result-score span,
+.result-best {
+    color: #b9c5df;
+    font-size: 13px;
+}
+
+.result-score strong {
+    font-size: 32px;
+    color: #f3d9a5;
+}
+
+.result-best {
+    margin-bottom: 20px;
+}
+
+.result-best strong {
+    color: #fff;
+}
+
+/* POPUP BUTTON */
+
+.primary-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #a994e8, #7863bd);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+.primary-btn:active {
+    transform: scale(0.96);
+    filter: brightness(1.15);
+}
+
+/* =================================
+   LOADING BAR
+================================= */
+
+.loading-track {
+    width: 100%;
+    height: 10px;
+    background: #303b5a;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 25px 0 12px;
+}
+
+#loadingBarFill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #a994e8, #f3d9a5);
+    border-radius: 20px;
+    transition: width 0.1s linear;
+}
+
+.loading-modal small {
+    color: #b9c5df;
+    font-size: 12px;
+}
+
+/* =================================
+   FULL-SCREEN CONFETTI
+================================= */
+
+#confettiContainer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2000;
+    display: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -20px;
+    width: 9px;
+    height: 14px;
+    opacity: 0.95;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(900deg);
+        opacity: 0;
+    }
+}
+/* =================================
+   CSS STRAWBERRY MASCOT
+================================= */
+
+.sad-mascot {
+    position: relative;
+    width: 115px;
+    height: 125px;
+    margin: 5px auto 20px;
+    animation: sadBounce 2s ease-in-out infinite;
+}
+
+/* Strawberry body */
+
+.mascot-body {
+    position: absolute;
+    width: 78px;
+    height: 83px;
+    left: 18px;
+    top: 28px;
+    background: linear-gradient(145deg, #ff777d, #e83250 65%, #bd2345);
+    border-radius: 46% 46% 48% 48% / 35% 35% 65% 65%;
+    box-shadow:
+        inset -7px -5px 10px rgba(130, 15, 40, 0.2),
+        0 7px 12px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* Strawberry leaves */
+
+.mascot-leaves {
+    position: absolute;
+    width: 65px;
+    height: 35px;
+    left: 25px;
+    top: 15px;
+    z-index: 3;
+}
+
+.mascot-leaves span {
+    position: absolute;
+    width: 19px;
+    height: 28px;
+    background: linear-gradient(#8fe09a, #299b63);
+    border-radius: 100% 0 100% 0;
+}
+
+.mascot-leaves span:nth-child(1) {
+    left: 3px;
+    transform: rotate(-48deg);
+}
+
+.mascot-leaves span:nth-child(2) {
+    left: 15px;
+    top: -7px;
+    transform: rotate(-15deg);
+}
+
+.mascot-leaves span:nth-child(3) {
+    left: 27px;
+    top: -5px;
+    transform: rotate(25deg);
+}
+
+.mascot-leaves span:nth-child(4) {
+    left: 39px;
+    transform: rotate(55deg);
+}
+
+.mascot-leaves span:nth-child(5) {
+    left: 23px;
+    top: 5px;
+    transform: rotate(90deg);
+}
+
+/* Eyes */
+
+.mascot-eyes {
+    position: absolute;
+    top: 27px;
+    left: 20px;
+    display: flex;
+    gap: 19px;
+}
+
+.mascot-eyes span {
+    width: 8px;
+    height: 11px;
+    background: #302035;
+    border-radius: 50%;
+}
+/* =================================
+   ROLLING TEARS
+================================= */
+
+.mascot-tears span {
+    position: absolute;
+    top: 38px;
+    width: 7px;
+    height: 11px;
+    background: #83d8ff;
+    border-radius: 50% 50% 55% 55%;
+    opacity: 0;
+
+    animation: rollingTear 1.8s ease-in infinite;
+}
+
+.mascot-tears span:first-child {
+    left: 19px;
+}
+
+.mascot-tears span:last-child {
+    right: 19px;
+    animation-delay: 0.9s;
+}
+
+@keyframes rollingTear {
+    0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 0;
+    }
+
+    15% {
+        transform: translateY(2px) scale(1);
+        opacity: 1;
+    }
+
+    75% {
+        transform: translateY(24px) scale(0.9);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(34px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* Sad mouth */
+
+.mascot-mouth {
+    position: absolute;
+    width: 17px;
+    height: 9px;
+    left: 31px;
+    top: 53px;
+    border-top: 3px solid #54202f;
+    border-radius: 50% 50% 0 0;
+}
+
+/* Blushing cheeks */
+
+.mascot-cheeks {
+    position: absolute;
+    width: 12px;
+    height: 7px;
+    left: 10px;
+    top: 48px;
+    border-radius: 50%;
+    background: rgba(255, 166, 174, 0.8);
+    box-shadow: 43px 0 rgba(255, 166, 174, 0.8);
+}
+
+/* Arms */
+
+.mascot-arm {
+    position: absolute;
+    top: 68px;
+    width: 22px;
+    height: 9px;
+    background: #e9475d;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.mascot-arm.left {
+    left: 1px;
+    transform: rotate(35deg);
+}
+
+.mascot-arm.right {
+    right: 1px;
+    transform: rotate(-35deg);
+}
+
+/* Feet */
+
+.mascot-foot {
+    position: absolute;
+    top: 104px;
+    width: 20px;
+    height: 10px;
+    background: #a92b43;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.mascot-foot.left {
+    left: 31px;
+}
+
+.mascot-foot.right {
+    right: 31px;
+}
+.quit-btn {
+  color: #ff8585;
+  border-color: rgba(255, 133, 133, 0.3);
+}
